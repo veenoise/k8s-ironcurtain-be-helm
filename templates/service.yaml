@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "k8s-ironcurtain-be-helm.fullname" . }}
+  labels:
+    {{- include "k8s-ironcurtain-be-helm.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+      nodePort: {{ .Values.service.nodePort }}
+  selector:
+    {{- include "k8s-ironcurtain-be-helm.selectorLabels" . | nindent 4 }}

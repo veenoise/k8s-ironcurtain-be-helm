@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['--spider', '{{ include "k8s-ironcurtain-be-helm.fullname" . }}:{{ .Values.service.port }}/health']
+      args: ['{{ include "k8s-ironcurtain-be-helm.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never

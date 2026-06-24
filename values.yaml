@@ -72,6 +72,12 @@ infisicalStaticSecret:
     name: k8s-ironcurtain-be-helm-secret
     namespace: k8s-ironcurtain-be-helm
 
+persistentvolumeclaim:
+  name: pvc-1
+  accessModes: ReadWriteOnce
+  storage: 100Mi
+  volumeName: pv-1
+
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
@@ -159,17 +165,15 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-  # - name: foo
-  #   secret:
-  #     secretName: mysecret
-  #     optional: false
+volumes:
+  - name: app-storage-volume
+    persistentVolumeClaim:
+      claimName: pvc-1
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-  # - name: foo
-  #   mountPath: "/etc/foo"
-  #   readOnly: true
+volumeMounts:
+  - name: app-storage-volume
+    mountPath: "/code/uploads"
 
 nodeSelector: {}
 
